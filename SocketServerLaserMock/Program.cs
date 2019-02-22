@@ -14,6 +14,8 @@ namespace SocketServerLaserMock
         private static BinaryReader ler;
         private static Thread threadSocket;
 
+        private static int countRX = 0;
+
         static void Main(string[] args)
         {
             threadSocket = new Thread(new ThreadStart(RunSocketServer));
@@ -69,6 +71,14 @@ namespace SocketServerLaserMock
                             {
                                 System.Threading.Thread.Sleep(1000);
                                 byte[] bytes = Encoding.ASCII.GetBytes("WX,OK\r");
+                                escreve.Write(bytes);
+                            }
+                            else if (msg.StartsWith("RX,PRG="))
+                            {
+                                countRX++;
+
+                                System.Threading.Thread.Sleep(100);
+                                byte[] bytes = Encoding.ASCII.GetBytes($"RX,OK,Title {countRX}\r");
                                 escreve.Write(bytes);
                             }
                         }
