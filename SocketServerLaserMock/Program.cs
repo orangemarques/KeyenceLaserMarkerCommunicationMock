@@ -81,12 +81,24 @@ namespace SocketServerLaserMock
                                 byte[] bytes = Encoding.ASCII.GetBytes($"RX,OK,Title {countRX}\r");
                                 escreve.Write(bytes);
                             }
+
+                            escreve.Close();
+                            ler.Close();
+                            socketStream.Close();
+                            conexao.Close();
+                            break;
                         }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"ex.Message = {ex.Message}");
                         //break;
+
+                        escreve.Close();
+                        ler.Close();
+                        socketStream.Close();
+                        conexao.Close();
+                        break;
                     }
                     //System.Threading.Thread.Sleep(100);
                 }
